@@ -5,7 +5,6 @@ import os
 
 print("Checking Playwright installation...")
 
-# Install Playwright browsers at runtime
 try:
     subprocess.run([sys.executable, "-m", "playwright", "install", "chromium"], check=True)
     print("Playwright browsers installed successfully")
@@ -13,9 +12,8 @@ except subprocess.CalledProcessError as e:
     print(f"Failed to install Playwright browsers: {e}")
     sys.exit(1)
 
-# Start the FastAPI app
 import uvicorn
-from main import app
+from main import app  # Import from main.py instead of scraper.py
 
 port = int(os.environ.get("PORT", 10000))
 uvicorn.run(app, host="0.0.0.0", port=port)
