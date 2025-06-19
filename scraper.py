@@ -1,15 +1,20 @@
 from fastapi import FastAPI
 from bs4 import BeautifulSoup
-import requests
+from playwright.sync_api import sync_playwright
 
 app = FastAPI()
 
 @app.get("/")
 def get_umpire_data():
-    url = "https://swishanalytics.com/mlb/mlb-umpire-factors"
-    res = requests.get(url)
-    soup = BeautifulSoup(res.text, "lxml")
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page()
+        page.goto("https://swishanalytics.com/mlb/mlb-umpire-factors", timeout=60000)
+        page.wait_for_selector("table")  # Wait for the table to render
+        html = page.content()
+        browser.close()
 
+    soup = BeautifulSoup(html, "lxml")
     table = soup.find("table")
     rows = table.find_all("tr")[2:]  # skip header rows
 
