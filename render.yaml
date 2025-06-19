@@ -1,9 +1,10 @@
 services:
   - type: web
     name: umpire-json-api
-    env: python
+    runtime: python
     plan: free
-    buildCommand: |
-      pip install -r requirements.txt
-      python -m playwright install --with-deps
-    startCommand: uvicorn scraper:app --host 0.0.0.0 --port 10000
+    buildCommand: pip install -r requirements.txt
+    startCommand: python startup.py
+    envVars:
+      - key: PLAYWRIGHT_BROWSERS_PATH
+        value: /opt/render/.cache/ms-playwright
