@@ -1,8 +1,18 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from playwright.async_api import async_playwright
 import asyncio
 
 app = FastAPI()
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://thebettinginsider.com"],  # Your website domain
+    allow_credentials=True,
+    allow_methods=["GET"],  # Only allow GET requests
+    allow_headers=["*"],
+)
 
 @app.get("/")
 async def get_umpire_data():
