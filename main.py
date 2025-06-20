@@ -8,7 +8,7 @@ app = FastAPI()
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://thebettinginsider.com"],  # Your website domain
+    allow_origins=["https://www.thebettinginsider.com"],  # Your website domain
     allow_credentials=True,
     allow_methods=["GET"],  # Only allow GET requests
     allow_headers=["*"],
